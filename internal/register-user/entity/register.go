@@ -21,7 +21,7 @@ func NewRegistration(
 	password string,
 	passwordConfirmation string,
 ) (*Registration, error) {
-	return &Registration{
+	registration := &Registration{
 		ID:                   id,
 		User:                 user,
 		FullName:             fullname,
@@ -29,7 +29,12 @@ func NewRegistration(
 		PhoneNumber:          phoneNumber,
 		Password:             password,
 		PasswordConfirmation: passwordConfirmation,
-	}, nil
+	}
+	err := registration.IsValid()
+	if err != nil {
+		return nil, err
+	}
+	return registration, nil
 }
 
 func (r *Registration) IsValid() error {
