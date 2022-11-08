@@ -45,5 +45,8 @@ func (r *Registration) IsValid() error {
 	if r.Email == "" {
 		return errors.New("invalid email")
 	}
+	if r.PhoneNumber == "" {
+		return errors.New("invalid phoneNumber")
+	}
 	return nil
 }
