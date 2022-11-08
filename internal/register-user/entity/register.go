@@ -36,5 +36,8 @@ func (r *Registration) IsValid() error {
 	if r.ID == "" {
 		return errors.New("invalid id")
 	}
+	if r.User == "" {
+		return errors.New("invalid user")
+	}
 	return nil
 }
