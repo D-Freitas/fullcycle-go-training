@@ -83,3 +83,16 @@ func TestGivenAnEmptyPassword_WhenCreateNewRegistration_ThenShouldReceiveAnError
 	}
 	assert.Error(t, registration.IsValid(), "invalid phoneNumber")
 }
+
+func TestGivenAnEmptyPasswordConfirmation_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
+	registration := Registration{
+		"id_test",
+		"user_test",
+		"fullname_test",
+		"email_test",
+		"phonenumber_test",
+		"password_test",
+		"",
+	}
+	assert.Error(t, registration.IsValid(), "invalid passwordConfirmation")
+}
