@@ -51,5 +51,8 @@ func (r *Registration) IsValid() error {
 	if r.Password == "" {
 		return errors.New("invalid password")
 	}
+	if r.PasswordConfirmation == "" {
+		return errors.New("invalid passwordConfirmation")
+	}
 	return nil
 }
