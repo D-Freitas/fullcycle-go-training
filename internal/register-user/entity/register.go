@@ -48,5 +48,8 @@ func (r *Registration) IsValid() error {
 	if r.PhoneNumber == "" {
 		return errors.New("invalid phoneNumber")
 	}
+	if r.Password == "" {
+		return errors.New("invalid password")
+	}
 	return nil
 }
