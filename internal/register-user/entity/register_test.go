@@ -70,3 +70,16 @@ func TestGivenAnEmptyPhoneNumber_WhenCreateNewRegistration_ThenShouldReceiveAnEr
 	}
 	assert.Error(t, registration.IsValid(), "invalid phoneNumber")
 }
+
+func TestGivenAnEmptyPassword_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
+	registration := Registration{
+		"id_test",
+		"user_test",
+		"fullname_test",
+		"email_test",
+		"phonenumber_test",
+		"",
+		"password_confirmation_test",
+	}
+	assert.Error(t, registration.IsValid(), "invalid phoneNumber")
+}
