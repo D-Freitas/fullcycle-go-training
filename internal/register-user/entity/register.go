@@ -1,6 +1,10 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 type Registration struct {
 	ID                   string
@@ -61,6 +65,21 @@ func (r *Registration) IsValid() error {
 	}
 	if r.Password != r.PasswordConfirmation {
 		return errors.New("mismatched password")
+	}
+	return nil
+}
+
+func (r *Registration) EncryptPassword() error {
+	password := []byte(r.Password)
+	hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	r.Password = string(hashedPassword)
+	r.PasswordConfirmation = string(hashedPassword)
+	err = r.IsValid()
+	if err != nil {
+		return err
 	}
 	return nil
 }
