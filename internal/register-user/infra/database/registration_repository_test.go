@@ -17,7 +17,7 @@ type RegistrationRepositoryTestSuite struct {
 func (suite *RegistrationRepositoryTestSuite) SetupSuite() {
 	db, err := sql.Open("sqlite3", ":memory:")
 	suite.NoError(err)
-	db.Exec("CREATE TABLE registrations (id varchar(255) NOT NULL, user varchar(10) NOT NULL, fullname varchar(80) NOT NULL, email varchar(255) NOT NULL, phoneNumber varchar(17) NOT NULL, password varchar(255) NOT NULL, passwordConfirmation varchar(255) NOT NULL)")
+	db.Exec("CREATE TABLE registrations (id varchar(255) NOT NULL, user varchar(10) NOT NULL, fullname varchar(80) NOT NULL, email varchar(255) NOT NULL, phoneNumber varchar(17) NOT NULL, password varchar(255) NOT NULL)")
 	suite.Db = db
 }
 
@@ -44,8 +44,8 @@ func (suite *RegistrationRepositoryTestSuite) TestGivenARegistration_WhenSave_Th
 	err = repo.Save(registration)
 	suite.NoError(err)
 	var registrationResult entity.Registration
-	err = suite.Db.QueryRow("SELECT id, user, fullname, email, phoneNumber, password, passwordConfirmation FROM registrations WHERE id = ?", registration.ID).
-		Scan(&registrationResult.ID, &registrationResult.User, &registrationResult.FullName, &registrationResult.Email, &registrationResult.PhoneNumber, &registrationResult.Password, &registrationResult.PasswordConfirmation)
+	err = suite.Db.QueryRow("SELECT id, user, fullname, email, phoneNumber, password FROM registrations WHERE id = ?", registration.ID).
+		Scan(&registrationResult.ID, &registrationResult.User, &registrationResult.FullName, &registrationResult.Email, &registrationResult.PhoneNumber, &registrationResult.Password)
 	suite.NoError(err)
 	suite.Equal(registration.ID, registrationResult.ID)
 	suite.Equal(registration.User, registrationResult.User)
@@ -53,5 +53,4 @@ func (suite *RegistrationRepositoryTestSuite) TestGivenARegistration_WhenSave_Th
 	suite.Equal(registration.Email, registrationResult.Email)
 	suite.Equal(registration.PhoneNumber, registrationResult.PhoneNumber)
 	suite.Equal(registration.Password, registrationResult.Password)
-	suite.Equal(registration.PasswordConfirmation, registrationResult.PasswordConfirmation)
 }

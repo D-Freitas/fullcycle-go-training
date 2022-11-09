@@ -14,11 +14,11 @@ func NewRegistrationRepository(db *sql.DB) *RegistrationRepository {
 }
 
 func (r *RegistrationRepository) Save(registration *entity.Registration) error {
-	stmt, err := r.Db.Prepare("INSERT INTO registrations (id, user, fullname, email, phoneNumber, password, passwordConfirmation) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	stmt, err := r.Db.Prepare("INSERT INTO registrations (id, user, fullname, email, phoneNumber, password) VALUES (?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(registration.ID, registration.User, registration.FullName, registration.Email, registration.PhoneNumber, registration.Password, registration.PasswordConfirmation)
+	_, err = stmt.Exec(registration.ID, registration.User, registration.FullName, registration.Email, registration.PhoneNumber, registration.Password)
 	if err != nil {
 		return err
 	}
