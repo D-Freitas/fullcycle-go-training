@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/stretchr/testify v1.8.1
+	golang.org/x/crypto v0.1.0
 )
 
 require (
