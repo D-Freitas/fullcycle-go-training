@@ -12,7 +12,7 @@ func PasswordValidator(password string) bool {
 		case unicode.IsUpper(c):
 			isUpper = true
 			letters++
-		case unicode.IsSymbol(c):
+		case unicode.IsSymbol(c) || unicode.IsPunct(c):
 			isSymbol = true
 		case unicode.IsLetter(c) || c == ' ':
 			letters++
