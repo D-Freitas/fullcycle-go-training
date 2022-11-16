@@ -6,7 +6,7 @@ import (
 
 func PasswordValidator(password string) bool {
 	letters := 0
-	isUpper, isSymbol := false, false
+	isUpper, isSymbol, isNumber := false, false, false
 	for _, c := range password {
 		switch {
 		case unicode.IsUpper(c):
@@ -16,9 +16,11 @@ func PasswordValidator(password string) bool {
 			isSymbol = true
 		case unicode.IsLetter(c) || c == ' ':
 			letters++
+		case unicode.IsNumber(c):
+			isNumber = true
 		}
 	}
 	containsSevenLettersOrMore := letters >= 7
-	isValid := containsSevenLettersOrMore && isUpper && isSymbol
+	isValid := containsSevenLettersOrMore && isUpper && isSymbol && isNumber
 	return isValid
 }
