@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	patternvalidator "server/internal/register-user/entity/pattern-validator"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -51,16 +52,16 @@ func (r *Registration) IsValid() error {
 	if r.FullName == "" {
 		return errors.New("invalid fullname")
 	}
-	if r.Email == "" {
+	if patternvalidator.EmailValidator(r.Email) {
 		return errors.New("invalid email")
 	}
-	if r.PhoneNumber == "" {
+	if patternvalidator.PhoneNumberValidator(r.PhoneNumber) {
 		return errors.New("invalid phoneNumber")
 	}
-	if r.Password == "" {
+	if patternvalidator.PasswordValidator(r.Password) {
 		return errors.New("invalid password")
 	}
-	if r.PasswordConfirmation == "" {
+	if patternvalidator.PasswordValidator(r.Password) {
 		return errors.New("invalid passwordConfirmation")
 	}
 	if r.Password != r.PasswordConfirmation {
