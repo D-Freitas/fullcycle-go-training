@@ -30,3 +30,8 @@ func TestGivenAPasswordWithoutSpecialChars_WhenToCheck_ThenMatchShouldReturnFals
 	isValid := PasswordValidator("DaviFreitas123")
 	assert.Equal(t, false, isValid)
 }
+
+func TestGivenAPasswordWithSpecialChars_WhenToCheck_ThenMatchShouldReturnFalse(t *testing.T) {
+	isValid := PasswordValidator("Davi@Freitas123")
+	assert.Equal(t, false, isValid)
+}
