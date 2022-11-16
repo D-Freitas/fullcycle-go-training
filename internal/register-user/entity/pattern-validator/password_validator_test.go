@@ -16,12 +16,7 @@ func TestGivenAPasswordWithSevenOrMoreLetters_WhenToCheck_ThenMatchShouldReturnT
 	assert.Equal(t, true, isValid)
 }
 
-func TestGivenAPasswordWithoutUppercaseLetter_WhenToCheck_ThenMatchShouldReturnFalse(t *testing.T) {
-	isMatch := PasswordValidator("davifreitas@123")
-	assert.Equal(t, false, isMatch)
-}
-
-func TestGivenAPasswordWithUppercaseLetter_WhenToCheck_ThenMatchShouldReturnTrue(t *testing.T) {
-	isMatch := PasswordValidator("DaviFreitas@123")
-	assert.Equal(t, true, isMatch)
+func TestGivenAPasswordWithoutUppercaseLetters_WhenToCheck_ThenMatchShouldReturnFalse(t *testing.T) {
+	isValid := PasswordValidator("davifreitas@123")
+	assert.Equal(t, false, isValid)
 }
