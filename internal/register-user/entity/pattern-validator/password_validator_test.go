@@ -20,3 +20,8 @@ func TestGivenAPasswordWithoutUppercaseLetters_WhenToCheck_ThenMatchShouldReturn
 	isValid := PasswordValidator("davifreitas@123")
 	assert.Equal(t, false, isValid)
 }
+
+func TestGivenAPasswordWithUppercaseLetters_WhenToCheck_ThenMatchShouldReturnTrue(t *testing.T) {
+	isValid := PasswordValidator("DaviFreitas@123")
+	assert.Equal(t, true, isValid)
+}
