@@ -20,7 +20,8 @@ func PasswordValidator(password string) bool {
 			isNumber = true
 		}
 	}
+	isFilled := password != ""
 	containsSevenLettersOrMore := letters >= 7
-	isValid := containsSevenLettersOrMore && isUpper && isSymbol && isNumber
+	isValid := isFilled && containsSevenLettersOrMore && isUpper && isSymbol && isNumber
 	return isValid
 }

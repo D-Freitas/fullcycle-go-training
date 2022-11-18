@@ -3,7 +3,8 @@ package patternvalidator
 import "regexp"
 
 func EmailValidator(email string) bool {
-	emailRegexp := regexp.MustCompile("/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$/")
+	isFilled := email != ""
+	emailRegexp := regexp.MustCompile(`^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$`)
 	isMatch := emailRegexp.MatchString(email)
-	return isMatch
+	return isFilled && isMatch
 }

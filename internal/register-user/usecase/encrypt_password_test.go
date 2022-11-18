@@ -37,13 +37,14 @@ func (suite *EncryptPasswordUseCaseTestSuite) TestEncryptPassword() {
 		"123",
 		"user_test",
 		"fullname_test",
-		"email_test",
-		"phonenumber_test",
-		"password_test",
-		"password_test",
+		"test@gmail.com",
+		"11944431351",
+		"TestPassword@123",
+		"TestPassword@123",
 	)
 	suite.NoError(err)
-	registration.EncryptPassword()
+	err = registration.EncryptPassword()
+	suite.NoError(err)
 	encryptPasswordInput := RegistrationInputDTO{
 		ID:                   registration.ID,
 		User:                 registration.User,

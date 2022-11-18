@@ -7,7 +7,7 @@ import (
 )
 
 func TestGivenAInvalidPhoneNumber_WhenToCheck_ThenMatchShouldReturnFalse(t *testing.T) {
-	isMatch := PhoneNumberValidator("00000000000")
+	isMatch := PhoneNumberValidator("000000000")
 	assert.Equal(t, false, isMatch)
 }
 

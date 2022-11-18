@@ -52,16 +52,16 @@ func (r *Registration) IsValid() error {
 	if r.FullName == "" {
 		return errors.New("invalid fullname")
 	}
-	if patternvalidator.EmailValidator(r.Email) {
+	if !patternvalidator.EmailValidator(r.Email) {
 		return errors.New("invalid email")
 	}
-	if patternvalidator.PhoneNumberValidator(r.PhoneNumber) {
+	if !patternvalidator.PhoneNumberValidator(r.PhoneNumber) {
 		return errors.New("invalid phoneNumber")
 	}
-	if patternvalidator.PasswordValidator(r.Password) {
+	if !patternvalidator.PasswordValidator(r.Password) {
 		return errors.New("invalid password")
 	}
-	if patternvalidator.PasswordValidator(r.Password) {
+	if !patternvalidator.PasswordValidator(r.PasswordConfirmation) {
 		return errors.New("invalid passwordConfirmation")
 	}
 	if r.Password != r.PasswordConfirmation {

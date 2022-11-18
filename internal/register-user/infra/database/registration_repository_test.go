@@ -34,10 +34,10 @@ func (suite *RegistrationRepositoryTestSuite) TestGivenARegistration_WhenSave_Th
 		"123",
 		"user_test",
 		"fullname_test",
-		"email_test",
-		"phonenumber_test",
-		"password_test",
-		"password_test",
+		"test@gmail.com",
+		"11944431351",
+		"TestPassword@123",
+		"TestPassword@123",
 	)
 	suite.NoError(err)
 	repo := NewRegistrationRepository(suite.Db)
