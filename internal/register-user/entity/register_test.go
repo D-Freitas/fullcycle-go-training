@@ -84,6 +84,19 @@ func TestGivenAnEmptyPassword_WhenCreateNewRegistration_ThenShouldReceiveAnError
 	assert.EqualError(t, registration.IsValid(), "register: invalid password, invalid passwordConfirmation")
 }
 
+func TestGivenAnEmptyUserAndEmptyFullname_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
+	registration := Registration{
+		"id_test",
+		"",
+		"",
+		"test@gmail.com",
+		"11944431351",
+		"TestPassword@123",
+		"TestPassword@123",
+	}
+	assert.EqualError(t, registration.IsValid(), "register: invalid user, invalid fullname")
+}
+
 func TestGivenAMismatchedPassword_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
 	registration := Registration{
 		"id_test",
