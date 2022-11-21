@@ -11,12 +11,12 @@ func TestGivenAnEmptyID_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *te
 		"",
 		"user_test",
 		"fullname_test",
-		"email_test",
-		"phonenumber_test",
+		"test@gmail.com",
+		"11944431351",
 		"TestPassword@123",
-		"password_confirmation_test",
+		"TestPassword@123",
 	}
-	assert.EqualError(t, registration.IsValid(), "invalid id")
+	assert.EqualError(t, registration.IsValid(), "register: invalid id")
 }
 
 func TestGivenAnEmptyUser_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
@@ -24,12 +24,12 @@ func TestGivenAnEmptyUser_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *
 		"id_test",
 		"",
 		"fullname_test",
-		"email_test",
-		"phonenumber_test",
+		"test@gmail.com",
+		"11944431351",
 		"TestPassword@123",
-		"password_confirmation_test",
+		"TestPassword@123",
 	}
-	assert.EqualError(t, registration.IsValid(), "invalid user")
+	assert.EqualError(t, registration.IsValid(), "register: invalid user")
 }
 
 func TestGivenAnEmptyFullname_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
@@ -37,12 +37,12 @@ func TestGivenAnEmptyFullname_WhenCreateNewRegistration_ThenShouldReceiveAnError
 		"id_test",
 		"user_test",
 		"",
-		"email_test",
-		"phonenumber_test",
+		"test@gmail.com",
+		"11944431351",
 		"TestPassword@123",
-		"password_confirmation_test",
+		"TestPassword@123",
 	}
-	assert.EqualError(t, registration.IsValid(), "invalid fullname")
+	assert.EqualError(t, registration.IsValid(), "register: invalid fullname")
 }
 
 func TestGivenAnEmptyEmail_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
@@ -51,11 +51,11 @@ func TestGivenAnEmptyEmail_WhenCreateNewRegistration_ThenShouldReceiveAnError(t 
 		"user_test",
 		"fullname_test",
 		"",
-		"phonenumber_test",
+		"11944431351",
 		"TestPassword@123",
-		"password_confirmation_test",
+		"TestPassword@123",
 	}
-	assert.EqualError(t, registration.IsValid(), "invalid email")
+	assert.EqualError(t, registration.IsValid(), "register: invalid email")
 }
 
 func TestGivenAnEmptyPhoneNumber_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
@@ -66,9 +66,9 @@ func TestGivenAnEmptyPhoneNumber_WhenCreateNewRegistration_ThenShouldReceiveAnEr
 		"test@gmail.com",
 		"",
 		"TestPassword@123",
-		"password_confirmation_test",
+		"TestPassword@123",
 	}
-	assert.EqualError(t, registration.IsValid(), "invalid phoneNumber")
+	assert.EqualError(t, registration.IsValid(), "register: invalid phoneNumber")
 }
 
 func TestGivenAnEmptyPassword_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
@@ -79,22 +79,9 @@ func TestGivenAnEmptyPassword_WhenCreateNewRegistration_ThenShouldReceiveAnError
 		"test@gmail.com",
 		"11944431351",
 		"",
-		"password_confirmation_test",
-	}
-	assert.EqualError(t, registration.IsValid(), "invalid password")
-}
-
-func TestGivenAnEmptyPasswordConfirmation_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
-	registration := Registration{
-		"id_test",
-		"user_test",
-		"fullname_test",
-		"test@gmail.com",
-		"11944431351",
-		"TestPassword@123",
 		"",
 	}
-	assert.EqualError(t, registration.IsValid(), "invalid passwordConfirmation")
+	assert.EqualError(t, registration.IsValid(), "register: invalid password, invalid passwordConfirmation")
 }
 
 func TestGivenAMismatchedPassword_WhenCreateNewRegistration_ThenShouldReceiveAnError(t *testing.T) {
@@ -107,7 +94,7 @@ func TestGivenAMismatchedPassword_WhenCreateNewRegistration_ThenShouldReceiveAnE
 		"TestPassword@123",
 		"TestPassword@1234",
 	}
-	assert.EqualError(t, registration.IsValid(), "mismatched password")
+	assert.EqualError(t, registration.IsValid(), "register: mismatched password")
 }
 
 func TestGivenAValidParams_WhenICallNewRegistration_ThenIShouldReceiveCreateRegistrationWithAllParams(t *testing.T) {

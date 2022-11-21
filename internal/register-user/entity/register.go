@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	"server/internal/register-user/entity/notification"
 	patternvalidator "server/internal/register-user/entity/pattern-validator"
 
 	"golang.org/x/crypto/bcrypt"
@@ -43,29 +44,33 @@ func NewRegistration(
 }
 
 func (r *Registration) IsValid() error {
+	notification := notification.NewRegisterNotification()
 	if r.ID == "" {
-		return errors.New("invalid id")
+		notification.AddError("invalid id")
 	}
 	if r.User == "" {
-		return errors.New("invalid user")
+		notification.AddError("invalid user")
 	}
 	if r.FullName == "" {
-		return errors.New("invalid fullname")
+		notification.AddError("invalid fullname")
 	}
 	if !patternvalidator.EmailValidator(r.Email) {
-		return errors.New("invalid email")
+		notification.AddError("invalid email")
 	}
 	if !patternvalidator.PhoneNumberValidator(r.PhoneNumber) {
-		return errors.New("invalid phoneNumber")
+		notification.AddError("invalid phoneNumber")
 	}
 	if !patternvalidator.PasswordValidator(r.Password) {
-		return errors.New("invalid password")
+		notification.AddError("invalid password")
 	}
 	if !patternvalidator.PasswordValidator(r.PasswordConfirmation) {
-		return errors.New("invalid passwordConfirmation")
+		notification.AddError("invalid passwordConfirmation")
 	}
 	if r.Password != r.PasswordConfirmation {
-		return errors.New("mismatched password")
+		notification.AddError("mismatched password")
+	}
+	if notification.HasErrors() {
+		return errors.New(notification.Messages())
 	}
 	return nil
 }
