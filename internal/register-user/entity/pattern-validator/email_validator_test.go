@@ -15,3 +15,8 @@ func TestGivenAnValidEmail_WhenToCheck_ThenMatchShouldReturnTrue(t *testing.T) {
 	isMatch := EmailValidator("davi.israel01@gmail.com")
 	assert.Equal(t, true, isMatch)
 }
+
+func TestGivenAnEmptyEmail_WhenToCheck_ThenMatchShouldReturnFalse(t *testing.T) {
+	isMatch := EmailValidator("")
+	assert.Equal(t, false, isMatch)
+}
