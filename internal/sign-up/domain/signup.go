@@ -1,14 +1,14 @@
-package entity
+package domain
 
 import (
 	"errors"
-	"server/internal/register-user/entity/notification"
-	patternvalidator "server/internal/register-user/entity/pattern-validator"
+	"server/internal/sign-up/domain/notification"
+	validator "server/internal/sign-up/domain/validator"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-type Registration struct {
+type SignUp struct {
 	ID                   string
 	User                 string
 	FullName             string
@@ -18,7 +18,7 @@ type Registration struct {
 	PasswordConfirmation string
 }
 
-func NewRegistration(
+func NewSignUp(
 	id string,
 	user string,
 	fullname string,
@@ -26,8 +26,8 @@ func NewRegistration(
 	phoneNumber string,
 	password string,
 	passwordConfirmation string,
-) (*Registration, error) {
-	registration := &Registration{
+) (*SignUp, error) {
+	signUp := &SignUp{
 		ID:                   id,
 		User:                 user,
 		FullName:             fullname,
@@ -36,15 +36,15 @@ func NewRegistration(
 		Password:             password,
 		PasswordConfirmation: passwordConfirmation,
 	}
-	err := registration.IsValid()
+	err := signUp.IsValid()
 	if err != nil {
 		return nil, err
 	}
-	return registration, nil
+	return signUp, nil
 }
 
-func (r *Registration) IsValid() error {
-	notification := notification.NewRegisterNotification()
+func (r *SignUp) IsValid() error {
+	notification := notification.NewSignUpNotification()
 	if r.ID == "" {
 		notification.AddError("invalid id")
 	}
@@ -54,16 +54,16 @@ func (r *Registration) IsValid() error {
 	if r.FullName == "" {
 		notification.AddError("invalid fullname")
 	}
-	if !patternvalidator.EmailValidator(r.Email) {
+	if !validator.EmailValidator(r.Email) {
 		notification.AddError("invalid email")
 	}
-	if !patternvalidator.PhoneNumberValidator(r.PhoneNumber) {
+	if !validator.PhoneNumberValidator(r.PhoneNumber) {
 		notification.AddError("invalid phoneNumber")
 	}
-	if !patternvalidator.PasswordValidator(r.Password) {
+	if !validator.PasswordValidator(r.Password) {
 		notification.AddError("invalid password")
 	}
-	if !patternvalidator.PasswordValidator(r.PasswordConfirmation) {
+	if !validator.PasswordValidator(r.PasswordConfirmation) {
 		notification.AddError("invalid passwordConfirmation")
 	}
 	if r.Password != r.PasswordConfirmation {
@@ -75,7 +75,7 @@ func (r *Registration) IsValid() error {
 	return nil
 }
 
-func (r *Registration) EncryptPassword() error {
+func (r *SignUp) EncryptPassword() error {
 	password := []byte(r.Password)
 	hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
 	if err != nil {

@@ -1,4 +1,4 @@
-package patternvalidator
+package validator
 
 import (
 	"unicode"
