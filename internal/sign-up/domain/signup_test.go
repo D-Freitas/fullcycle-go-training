@@ -123,7 +123,7 @@ func TestGivenAMismatchedPassword_WhenCreateNewSignUp_ThenShouldReceiveAnError(t
 	assert.EqualError(t, signUp.IsValid(), "signup: mismatched password")
 }
 
-func TestGivenAValidParams_WhenICallNewSignUp_ThenIShouldReceiveCreateSignUpWithAllParams(t *testing.T) {
+func TestGivenAValidParams_WhenCallNewSignUp_ThenShouldReceiveCreateSignUpWithAllParams(t *testing.T) {
 	signUp := SignUp{
 		"123",
 		"user_test",
@@ -143,7 +143,7 @@ func TestGivenAValidParams_WhenICallNewSignUp_ThenIShouldReceiveCreateSignUpWith
 	assert.Nil(t, signUp.IsValid())
 }
 
-func TestGivenAValidParams_WhenICallNewSignUpFunc_ThenIShouldReceiveCreateSignUpWithAllParams(t *testing.T) {
+func TestGivenAValidParams_WhenCallNewSignUpFunc_ThenShouldReceiveCreateSignUpWithAllParams(t *testing.T) {
 	signUp, err := NewSignUp(
 		"123",
 		"user_test",
@@ -161,4 +161,25 @@ func TestGivenAValidParams_WhenICallNewSignUpFunc_ThenIShouldReceiveCreateSignUp
 	assert.Equal(t, "11944431351", signUp.PhoneNumber)
 	assert.Equal(t, "TestPassword@123", signUp.Password)
 	assert.Equal(t, "TestPassword@123", signUp.PasswordConfirmation)
+}
+
+func TestGivenAValidParams_WhenCallNewSignUpAndEncryptPasswordFunc_ThenShouldEncryptPassword(t *testing.T) {
+	signUp, err := NewSignUp(
+		"123",
+		"user_test",
+		"fullname_test",
+		"test@gmail.com",
+		"11944431351",
+		"TestPassword@123",
+		"TestPassword@123",
+	)
+	signUp.EncryptPassword()
+	assert.Nil(t, err)
+	assert.Equal(t, "123", signUp.ID)
+	assert.Equal(t, "user_test", signUp.User)
+	assert.Equal(t, "fullname_test", signUp.FullName)
+	assert.Equal(t, "test@gmail.com", signUp.Email)
+	assert.Equal(t, "11944431351", signUp.PhoneNumber)
+	assert.NotEqual(t, "TestPassword@123", signUp.Password)
+	assert.NotEqual(t, "TestPassword@123", signUp.PasswordConfirmation)
 }
