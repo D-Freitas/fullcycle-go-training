@@ -48,7 +48,7 @@ func (r *SignUp) IsValid() error {
 	if r.ID == "" {
 		notification.AddError("invalid id")
 	}
-	if r.User == "" {
+	if r.User == "" || len(r.User) > 20 {
 		notification.AddError("invalid user")
 	}
 	if r.FullName == "" {
