@@ -183,3 +183,16 @@ func TestGivenAValidParams_WhenCallNewSignUpAndEncryptPasswordFunc_ThenShouldEnc
 	assert.NotEqual(t, "TestPassword@123", signUp.Password)
 	assert.NotEqual(t, "TestPassword@123", signUp.PasswordConfirmation)
 }
+
+func TestGivenAUsernameWithManyCharacters_WhenCreateNewSignUp_ThenShouldReceiveAnError(t *testing.T) {
+	signUp := SignUp{
+		"123",
+		"a_user_with_many_characters",
+		"fullname_test",
+		"test@gmail.com",
+		"11944431351",
+		"TestPassword@123",
+		"TestPassword@123",
+	}
+	assert.EqualError(t, signUp.IsValid(), "signup: invalid user")
+}
