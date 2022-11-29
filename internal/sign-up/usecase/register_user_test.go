@@ -10,13 +10,13 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-type EncryptPasswordUseCaseTestSuite struct {
+type RegisterUserUseCaseTestSuite struct {
 	suite.Suite
 	SignUpRepository database.SignUpRepository
 	Db               *sql.DB
 }
 
-func (suite *EncryptPasswordUseCaseTestSuite) SetupSuite() {
+func (suite *RegisterUserUseCaseTestSuite) SetupSuite() {
 	db, err := sql.Open("sqlite3", ":memory:")
 	suite.NoError(err)
 	db.Exec("CREATE TABLE users (id varchar(255) NOT NULL, user varchar(10) NOT NULL, fullname varchar(80) NOT NULL, email varchar(255) NOT NULL, phoneNumber varchar(17) NOT NULL, password varchar(255) NOT NULL)")
@@ -24,15 +24,15 @@ func (suite *EncryptPasswordUseCaseTestSuite) SetupSuite() {
 	suite.SignUpRepository = *database.NewSignUpRepository(db)
 }
 
-func (suite *EncryptPasswordUseCaseTestSuite) TearDownTest() {
+func (suite *RegisterUserUseCaseTestSuite) TearDownTest() {
 	suite.Db.Close()
 }
 
 func TestSuite(t *testing.T) {
-	suite.Run(t, new(EncryptPasswordUseCaseTestSuite))
+	suite.Run(t, new(RegisterUserUseCaseTestSuite))
 }
 
-func (suite *EncryptPasswordUseCaseTestSuite) TestEncryptPassword() {
+func (suite *RegisterUserUseCaseTestSuite) TestRegisterUserUseCase() {
 	signUp, err := domain.NewSignUp(
 		"123",
 		"user_test",
@@ -45,7 +45,7 @@ func (suite *EncryptPasswordUseCaseTestSuite) TestEncryptPassword() {
 	suite.NoError(err)
 	err = signUp.EncryptPassword()
 	suite.NoError(err)
-	encryptPasswordInput := UserInputDTO{
+	registerUserUseCaseInput := UserInputDTO{
 		ID:                   signUp.ID,
 		User:                 signUp.User,
 		FullName:             signUp.FullName,
@@ -54,8 +54,8 @@ func (suite *EncryptPasswordUseCaseTestSuite) TestEncryptPassword() {
 		Password:             signUp.Password,
 		PasswordConfirmation: signUp.PasswordConfirmation,
 	}
-	encryptPasswordUseCase := NewEncryptPasswordUseCase(suite.SignUpRepository)
-	output, err := encryptPasswordUseCase.Execute(encryptPasswordInput)
+	registerUserUseCase := NewRegisterUserUseCase(suite.SignUpRepository)
+	output, err := registerUserUseCase.Execute(registerUserUseCaseInput)
 	suite.NoError(err)
 	suite.Equal(signUp.ID, output.ID)
 	suite.Equal(signUp.User, output.User)

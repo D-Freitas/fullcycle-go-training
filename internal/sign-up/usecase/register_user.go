@@ -24,17 +24,17 @@ type UserOutputDTO struct {
 	PhoneNumber string
 }
 
-type EncryptPasswordUseCase struct {
+type RegisterUserUseCase struct {
 	SignUpRepository contract.SignUpRepository
 }
 
-func NewEncryptPasswordUseCase(signUpRepository database.SignUpRepository) *EncryptPasswordUseCase {
-	return &EncryptPasswordUseCase{
+func NewRegisterUserUseCase(signUpRepository database.SignUpRepository) *RegisterUserUseCase {
+	return &RegisterUserUseCase{
 		SignUpRepository: &signUpRepository,
 	}
 }
 
-func (e *EncryptPasswordUseCase) Execute(input UserInputDTO) (*UserOutputDTO, error) {
+func (e *RegisterUserUseCase) Execute(input UserInputDTO) (*UserOutputDTO, error) {
 	user, err := domain.NewSignUp(input.ID, input.User, input.FullName, input.Email, input.PhoneNumber, input.Password, input.PasswordConfirmation)
 	if err != nil {
 		return nil, err
