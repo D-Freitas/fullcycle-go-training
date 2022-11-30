@@ -1,4 +1,4 @@
-package usecase
+package application
 
 import (
 	"server/internal/sign-up/domain"
