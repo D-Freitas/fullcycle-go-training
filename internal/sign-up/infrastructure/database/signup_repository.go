@@ -14,7 +14,7 @@ func NewSignUpRepository(db *sql.DB) *SignUpRepository {
 }
 
 func (r *SignUpRepository) Save(data *domain.SignUp) error {
-	stmt, err := r.Db.Prepare("INSERT INTO users (id, user, fullname, email, phoneNumber, password) VALUES (?, ?, ?, ?, ?, ?)")
+	stmt, err := r.Db.Prepare("INSERT INTO users (id, username, fullname, email, phoneNumber, password) VALUES ($1, $2, $3, $4, $5, $6)")
 	if err != nil {
 		return err
 	}
