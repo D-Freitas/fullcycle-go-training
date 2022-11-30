@@ -2,11 +2,12 @@ package usecase
 
 import (
 	"database/sql"
+	"fmt"
 	"server/internal/sign-up/domain"
 	"server/internal/sign-up/infrastructure/database"
 	"testing"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/lib/pq"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -16,15 +17,43 @@ type RegisterUserUseCaseTestSuite struct {
 	Db               *sql.DB
 }
 
+var dbsql *sql.DB
+
 func (suite *RegisterUserUseCaseTestSuite) SetupSuite() {
-	db, err := sql.Open("sqlite3", ":memory:")
+	var (
+		host     = "127.0.0.1"
+		port     = 5432
+		user     = "admin"
+		password = "admin"
+		dbname   = "postgres"
+	)
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
 	suite.NoError(err)
-	db.Exec("CREATE TABLE users (id varchar(255) NOT NULL, user varchar(10) NOT NULL, fullname varchar(80) NOT NULL, email varchar(255) NOT NULL, phoneNumber varchar(17) NOT NULL, password varchar(255) NOT NULL)")
+	db.Exec(`
+	CREATE TABLE users (
+		id varchar(255) NOT NULL,
+		username varchar(20) UNIQUE NOT NULL,
+		fullname varchar(80) UNIQUE NOT NULL,
+		email varchar(255) UNIQUE NOT NULL,
+		phoneNumber varchar(17) NOT NULL,
+		password varchar(255) NOT NULL
+	)
+	`)
 	suite.Db = db
 	suite.SignUpRepository = *database.NewSignUpRepository(db)
+	dbsql = db
 }
 
 func (suite *RegisterUserUseCaseTestSuite) TearDownTest() {
+	dbsql.Exec("drop table users")
 	suite.Db.Close()
 }
 

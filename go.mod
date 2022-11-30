@@ -3,6 +3,7 @@ module server
 go 1.19
 
 require (
+	github.com/lib/pq v1.10.7
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/stretchr/testify v1.8.1
 	golang.org/x/crypto v0.1.0
